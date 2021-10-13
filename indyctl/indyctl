@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+
+"""
+indyctl urettigi ve kullanacagi dosyalari ~/.indyctl dizinine koyar
+indyctl apply -f indyresource.yml
+indyctl init, resources dir'indeki kaynaklari init eder 
+"""
+
+import argparse
+import asyncio
+import logging
+
+from pathlib import Path
+from config import IndyctlConfig
+from indyctl import config
+from indyctl import init
+
+from init import ResourceHandler
+
+logging.basicConfig(level=logging.INFO)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--indyctl-path", type=str,
+                        default="~/.indyctl", help="indyctl config dir path")
+    parser.add_argument("init", type=str, default="~/.indyctl", help="indyctl config dir path")
+    parser.add_argument("resource", choices=["all", "pool", "didwallet", "schemacred"])
+    args = parser.parse_args()
+
+    config = IndyctlConfig(Path(args.indyctl_path))
+
+    if args.init == "init":
+        logging.info("Running init")
+        resource_handler = ResourceHandler(config)
+        if args.resource == "all":
+            resource_handler.init_all_resources()
+        elif args.resource == "schemacred":
+            resource_handler.init_schemacred_resources()
+        elif args.resource == "pool":
+            resource_handler.init_pool_resources()
+        elif args.resource == "didwallet":
+            resource_handler.init_didwallet_resources()

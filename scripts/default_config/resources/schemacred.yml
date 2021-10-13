@@ -1,0 +1,18 @@
+---
+schemas:
+  lp:
+    did: steward1
+    name: lp
+    version: "1.0"
+    attributes: 
+      - lp
+
+---
+creds:
+  lp5:
+    did: steward1
+    schema: lp 
+    tag: TAG1
+    type: CL
+    config:
+      support_revocation: false

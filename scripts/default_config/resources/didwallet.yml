@@ -1,0 +1,12 @@
+---
+dids:
+  steward1: 
+    role: STEWARD
+    seed: 000000000000000000000000Steward1
+---
+wallets:
+  steward_wallet:
+    id: steward_wallet
+    key: "1234"
+    dids:
+      - steward1
